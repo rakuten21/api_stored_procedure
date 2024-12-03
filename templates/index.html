@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee List</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center">Employee List</h1>
+      <table class="table table-striped table-bordered mt-4" id="employeeTable">
+        <thead class="table-dark">
+          <tr>
+            <th>Employee ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Position</th>
+            <th>Department</th>
+            <th>Hire Date</th>
+            <th>Salary</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be populated here by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Fetch Script -->
+    <script>
+      // Function to fetch employee data and populate the table
+      async function fetchEmployees() {
+        try {
+          // Fetch data from your Flask API
+          const response = await fetch("http://127.0.0.1:5000/get-employees");
+
+          // Check if the response is OK
+          if (!response.ok) {
+            throw new Error(
+              `Error: ${response.status} - ${response.statusText}`
+            );
+          }
+
+          // Parse the JSON data
+          const data = await response.json();
+
+          // Get the table body element
+          const tableBody = document
+            .getElementById("employeeTable")
+            .querySelector("tbody");
+          tableBody.innerHTML = ""; // Clear any existing rows
+
+          // Loop through the employee data and create rows
+          data.forEach((employee) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${employee.EmployeeID}</td>
+              <td>${employee.FirstName}</td>
+              <td>${employee.LastName}</td>
+              <td>${employee.Position}</td>
+              <td>${employee.Department}</td>
+              <td>${employee.HireDate}</td>
+              <td>${employee.Salary.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}</td>
+              <td>${employee.Email}</td>
+            `;
+            tableBody.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Error fetching employees:", error);
+          alert("Failed to load employee data. Please try again later.");
+        }
+      }
+
+      // Fetch employee data when the page loads
+      document.addEventListener("DOMContentLoaded", fetchEmployees);
+    </script>
+  </body>
+</html>

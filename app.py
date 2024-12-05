@@ -53,11 +53,6 @@ def get_employee_details():
         # Return a 500 error if something goes wrong
         return jsonify({'error': str(e)}), 500
 
-    finally:
-        # Ensure the database connection is closed
-        cursor.close()
-        conn.close()
-
 # -------------------------------
 # Route: /get-employees
 # Purpose: Fetch details of all employees
@@ -97,11 +92,6 @@ def get_all_employees():
     except Exception as e:
         # Return a 500 error if something goes wrong
         return jsonify({'error': str(e)}), 500
-
-    finally:
-        # Ensure the database connection is closed
-        cursor.close()
-        conn.close()
 
 # -------------------------------
 # Route: /add-employee
@@ -151,11 +141,6 @@ def add_employee():
         # Return a 500 error if something goes wrong
         return jsonify({'error': str(e)}), 500
 
-    finally:
-        # Ensure the database connection is closed
-        cursor.close()
-        conn.close()
-
 # -------------------------------
 # Route: /edit-employee/<EmployeeID>
 # Purpose: Edit an existing employee's details
@@ -195,11 +180,6 @@ def edit_employee(EmployeeID):
         # Return a 500 error if something goes wrong
         return jsonify({'error': str(e)}), 500
 
-    finally:
-        # Ensure the database connection is closed
-        cursor.close()
-        conn.close()
-
 # -------------------------------
 # Route: /delete-employee/<EmployeeID>
 # Purpose: Delete an employee
@@ -223,11 +203,6 @@ def delete_employee(EmployeeID):
     except Exception as e:
         # Return a 500 error if something goes wrong
         return jsonify({'error': str(e)}), 500
-
-    finally:
-        # Ensure the database connection is closed
-        cursor.close()
-        conn.close()
 
 # -------------------------------
 # Entry Point
